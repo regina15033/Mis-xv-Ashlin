@@ -3,7 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis XV - Ashlin Merary</title>
+    
+    <!-- Configuración para compartir en WhatsApp, Messenger, Facebook, etc. (Open Graph Meta Tags) -->
+    <title>Mis xv años Ashlin Merary ❤️</title>
+    <meta property="og:title" content="Mis xv años Ashlin Merary ❤️" />
+    <meta property="og:description" content="Te invito a celebrar conmigo este día tan especial. ¡Haz clic para ver los detalles!" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM.jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Configuración adicional para Twitter/X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mis xv años Ashlin Merary ❤️">
+    <meta name="twitter:description" content="Te invito a celebrar conmigo este día tan especial.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM.jpeg">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -48,21 +63,35 @@
             height: 100vh;
             width: 100%;
             overflow: hidden;
-            background-color: var(--fuchsia);
+            background-color: var(--fuchsia-dark);
         }
 
-        .hero-image {
+        /* Capa artística desenfocada para los bordes */
+        .hero-bg-blur {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 12%; 
-            transform: scale(1.0);
+            filter: blur(25px) brightness(0.6);
+            transform: scale(1.1);
+        }
+
+        /* Foto principal nítida, alejada y visible al 100% de forma completa */
+        .hero-image {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Garantiza que la foto se vea entera sin recortes */
+            transform: scale(0.95); /* Margen sutil para que respire mejor */
         }
 
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 65%, var(--fuchsia) 100%);
+            z-index: 8;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 70%, var(--fuchsia) 100%);
         }
 
         .glass-card {
@@ -106,14 +135,14 @@
             z-index: 50; /* Por encima de las imágenes de fondo, por debajo de los textos interactivos */
         }
 
-        /* Contador con bordes de plata */
+        /* Contador con bordes de plata - Reducido un 30% en espaciados y dimensiones */
         .timer-unit {
             background: var(--white);
-            border: 2px solid var(--silver-medium);
-            box-shadow: 0 10px 30px rgba(203, 213, 225, 0.3);
-            padding: 15px;
-            border-radius: 20px;
-            min-width: 85px;
+            border: 1.5px solid var(--silver-medium);
+            box-shadow: 0 7px 20px rgba(203, 213, 225, 0.2);
+            padding: 8px 10px;
+            border-radius: 14px;
+            min-width: 60px; /* Reducido de 85px */
         }
 
         /* Ajuste de parallax para imágenes que abarcan la página completa */
@@ -160,17 +189,24 @@
 
     <!-- Sección de Portada -->
     <header class="relative hero-image-container">
+        <!-- Fondo desenfocado artístico para eliminar bordes planos -->
+        <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM.jpeg" 
+             class="hero-bg-blur" alt="">
+             
+        <!-- Foto principal nítida, alejada y visible al 100% -->
         <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM.jpeg" 
              class="hero-image" id="main-photo" alt="Ashlin Merary Portada">
+             
         <div class="hero-overlay"></div>
 
         <!-- Texto subido a la parte superior para no obstruir la imagen de Ashlin -->
-        <div class="absolute inset-0 flex flex-col items-center justify-start pt-20 md:pt-28 text-center px-4">
+        <div class="absolute inset-0 flex flex-col items-center justify-start pt-20 md:pt-28 text-center px-4 z-10">
             <div class="select-none" id="hero-text-block">
                 <p id="hero-subtitle" class="text-white/95 tracking-[0.8em] text-[11px] mb-4 uppercase font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] opacity-0 translate-y-4">Mis XV Años</p>
                 <h1 id="hero-title" class="font-cursive text-[18vw] md:text-[9.5rem] leading-none text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] scale-95 opacity-0">Ashlin Merary</h1>
                 <div id="hero-divider" class="w-32 h-[2px] bg-gradient-to-r from-transparent via-slate-300 to-transparent mx-auto my-6 drop-shadow opacity-0"></div>
-                <p id="hero-date" class="font-serif italic text-2xl md:text-3xl text-slate-100 drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)] opacity-0 -translate-y-4">24 de Mayo, 2026</p>
+                <!-- Fecha estilizada de forma minimalista, más pequeña y sofisticada -->
+                <p id="hero-date" class="font-sans text-xs md:text-sm tracking-[0.3em] font-semibold text-slate-200 uppercase drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)] opacity-0 -translate-y-4">24 de Mayo, 2026</p>
             </div>
         </div>
     </header>
@@ -193,53 +229,49 @@
             <!-- Separador de plata -->
             <div class="silver-border-line w-1/2 mx-auto my-12 opacity-60"></div>
 
-            <!-- Flujo: Invitación, Fecha y Cuenta Regresiva -->
+            <!-- Nuevo flujo: Invitación, Fecha y Cuenta Regresiva -->
             <div class="reveal-item text-center space-y-8 mt-20">
                 <p class="font-cursive text-6xl md:text-7xl text-white drop-shadow-md">Te invito a celebrar conmigo</p>
                 <div class="w-16 h-[1px] bg-slate-300/40 mx-auto"></div>
                 <p class="font-serif italic text-4xl md:text-5xl silver-text-gradient tracking-wide">24 de Mayo, 2026</p>
                 
                 <!-- Cuenta Regresiva plateada de gala -->
-                <div class="flex justify-center gap-3 md:gap-6 text-center pt-8">
+                <div class="flex justify-center gap-2 md:gap-4 text-center pt-8">
                     <div class="timer-unit text-dark">
-                        <span id="days" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Días</span>
+                        <span id="days" class="block text-xl md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[7px] uppercase tracking-widest text-slate-400 font-bold">Días</span>
                     </div>
                     <div class="timer-unit text-dark">
-                        <span id="hours" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Horas</span>
+                        <span id="hours" class="block text-xl md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[7px] uppercase tracking-widest text-slate-400 font-bold">Horas</span>
                     </div>
                     <div class="timer-unit text-dark">
-                        <span id="minutes" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Minutos</span>
+                        <span id="minutes" class="block text-xl md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[7px] uppercase tracking-widest text-slate-400 font-bold">Minutos</span>
                     </div>
                     <div class="timer-unit text-dark">
-                        <span id="seconds" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Segundos</span>
+                        <span id="seconds" class="block text-xl md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[7px] uppercase tracking-widest text-slate-400 font-bold">Segundos</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOTO 1: Pantalla Completa Limpia (Después de la Cuenta Regresiva) con animación de revelado de máscara -->
+    <!-- FOTO 1: Pantalla Completa Limpia (Sin marcos flotantes sobre la foto) -->
     <section class="full-page-photo-container">
         <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM%20(1).jpeg" 
              alt="Ashlin Primera Foto Completa" 
              class="absolute inset-0 w-full h-full object-cover object-center scale-[1.08] transition-transform duration-[1000ms] ease-out"
              id="photo-showcase-1">
-        
-        <!-- Sutil marco plateado flotante que bordea la pantalla entera para un look de revista de gala -->
-        <div class="absolute inset-4 pointer-events-none border border-white/30 rounded-[20px] shadow-[inset_0_0_80px_rgba(0,0,0,0.15)]"></div>
-        <div class="absolute inset-5 pointer-events-none border border-slate-300/20 rounded-[16px]"></div>
     </section>
 
     <!-- Datos del Evento -->
     <section class="py-24 px-6 bg-[#fff0f6] relative">
         <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
-            <!-- Ceremonia Religiosa -->
-            <div class="reveal-item glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f]">
-                <div class="w-16 h-16 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8 border border-slate-200 overflow-hidden shadow-sm">
+            <!-- Ceremonia Religiosa (Contenido centrado simétricamente) -->
+            <div class="reveal-item glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f] text-center flex flex-col items-center">
+                <div class="w-16 h-16 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8 border border-slate-200 overflow-hidden shadow-sm mx-auto">
                     <!-- Icono personalizado de Iglesia (89013.png) -->
                     <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/89013.png" alt="Icono Iglesia" class="w-10 h-10 object-contain">
                 </div>
@@ -252,9 +284,9 @@
                 <a href="https://maps.google.com/?q=80+Saint+Thomas+way+35115" target="_blank" class="inline-block px-10 py-4 bg-[#ff007f] hover:bg-[#b30059] text-white font-bold rounded-full text-[10px] uppercase tracking-[0.2em] shadow-xl transition-all border-b-2 border-slate-300">Ver Mapa</a>
             </div>
 
-            <!-- Recepción -->
-            <div class="reveal-item glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f]">
-                <div class="w-16 h-16 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8 border border-slate-200 overflow-hidden shadow-sm">
+            <!-- Recepción (Contenido centrado simétricamente) -->
+            <div class="reveal-item glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f] text-center flex flex-col items-center">
+                <div class="w-16 h-16 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8 border border-slate-200 overflow-hidden shadow-sm mx-auto">
                     <!-- Icono personalizado de Recepción (image-removebg-preview.png) -->
                     <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/image-removebg-preview.png" alt="Icono Recepción" class="w-10 h-10 object-contain">
                 </div>
@@ -269,16 +301,12 @@
         </div>
     </section>
 
-    <!-- FOTO 2: Pantalla Completa Limpia (Después de las Ubicaciones/Recepción) -->
+    <!-- FOTO 2: Pantalla Completa Limpia (Sin marcos flotantes sobre la foto) -->
     <section class="full-page-photo-container">
         <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.56%20AM.jpeg" 
              alt="Ashlin Segunda Foto Completa" 
              class="absolute inset-0 w-full h-full object-cover object-center scale-[1.08] transition-transform duration-[1000ms] ease-out"
              id="photo-showcase-2">
-             
-        <!-- Acabados plateados minimalistas flotantes para un encuadre de gala -->
-        <div class="absolute inset-4 pointer-events-none border border-white/30 rounded-[20px] shadow-[inset_0_0_80px_rgba(0,0,0,0.15)]"></div>
-        <div class="absolute inset-5 pointer-events-none border border-slate-300/20 rounded-[16px]"></div>
     </section>
 
     <!-- Frase célebre de Quinceañera -->
@@ -293,9 +321,9 @@
     <!-- Detalles del Evento: Lluvia de Sobres -->
     <section class="py-32 px-6 bg-[#fff0f6] text-center relative">
         <div class="max-w-3xl mx-auto space-y-16">
-            <!-- Lluvia de Sobres con toque de plata y aparición gradual -->
+            <!-- Lluvia de Sobres con caligrafía cursiva -->
             <div class="reveal-item">
-                <h2 class="font-serif text-5xl mb-4 italic text-[#ff007f]">Lluvia de Sobres</h2>
+                <h2 class="font-cursive text-6xl md:text-7xl mb-4 text-[#ff007f] tracking-wide">Lluvia de Sobres</h2>
                 <div class="silver-border-line w-20 mx-auto mb-8"></div>
                 <p class="text-lg text-slate-600 max-w-xl mx-auto leading-relaxed">
                     Tu presencia es mi mejor regalo. Si deseas tener un detalle conmigo, te agradezco que sea en efectivo en un sobre cerrado que podrás depositar en la entrada de la recepción.
@@ -304,7 +332,7 @@
         </div>
     </section>
 
-    <!-- Sección de Cierre Final: Pantalla Completa (Full Screen - 100vh) -->
+    <!-- Sección de Cierre Final: Pantalla Completa -->
     <section class="relative h-screen w-full overflow-hidden flex flex-col justify-end text-center">
         <!-- Imagen de fondo a pantalla completa -->
         <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.58%20AM.jpeg" 
@@ -315,8 +343,8 @@
         <!-- Gradiente sofisticada fucsia-oscura para dar máxima legibilidad de borde a borde -->
         <div class="absolute inset-0 bg-gradient-to-t from-[#2a0014]/95 via-[#ff007f]/40 to-transparent z-[11]"></div>
         
-        <!-- Contenido textual superpuesto sobre la imagen de fondo con animación -->
-        <div class="relative z-20 pb-32 px-6 reveal-item flex flex-col items-center justify-end h-full">
+        <!-- Contenido textual superpuesto bajado cerca de la base -->
+        <div class="relative z-20 pb-12 px-6 reveal-item flex flex-col items-center justify-end h-full">
             <h2 class="font-cursive text-7xl md:text-[11rem] leading-none mb-6 drop-shadow-2xl text-white">¡Te Espero!</h2>
             <p class="text-sm md:text-xl text-white/95 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-medium tracking-wide">
                 Para compartir juntos momentos inolvidables en este nuevo capítulo de mi vida.
@@ -448,8 +476,8 @@
 
             // Animación lenta e inmersiva de la foto de portada principal
             document.getElementById('main-photo').animate([
-                { transform: 'scale(1.0)' },
-                { transform: 'scale(1.05)' }
+                { transform: 'scale(0.95)' },
+                { transform: 'scale(1.02)' }
             ], {
                 duration: 20000,
                 iterations: Infinity,
