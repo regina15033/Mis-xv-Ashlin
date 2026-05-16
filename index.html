@@ -79,14 +79,14 @@
             transform: scale(1.1);
         }
 
-        /* Foto principal nítida, alejada y visible al 100% */
+        /* Foto principal nítida, alejada sutilmente para verse completa pero más grande en pantalla */
         .hero-image {
             position: relative;
             z-index: 5;
             width: 100%;
             height: 100%;
             object-fit: contain; 
-            transform: scale(0.75); /* Se aleja un 25% más del encuadre para no recortar la imagen */
+            transform: scale(0.85); /* Incrementado de 0.75 a 0.85 para llenar el espacio vacío */
         }
 
         .hero-overlay {
@@ -130,14 +130,14 @@
             z-index: 50; 
         }
 
-        /* Contador con bordes de plata - Reducido un 30% ADICIONAL para un look ultra elegante */
+        /* Contador con bordes de plata - Rediseñado y aumentado un 20% para mayor impacto visual */
         .timer-unit {
             background: var(--white);
             border: 1px solid var(--silver-medium);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            padding: 4px 6px; 
-            border-radius: 10px;
-            min-width: 45px; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 6px 10px; /* Incrementado para dar más aire */
+            border-radius: 12px;
+            min-width: 55px; /* Redefinido de 45px a 55px (aumento del 20%) */
         }
 
         /* Ajuste de parallax para imágenes que abarcan la página completa libre de fondos blancos */
@@ -167,7 +167,7 @@
         </div>
     </div>
 
-    <!-- Reproductor de Música Nativo -->
+    <!-- Reproduador de Música Nativo -->
     <div id="music-control" class="fixed bottom-8 right-8 z-[100] hidden opacity-0 flex items-center bg-white/95 backdrop-blur-sm p-3 rounded-full border border-[#ff007f]/30 shadow-xl cursor-pointer" onclick="toggleMusic()">
         <div id="music-bars" class="flex gap-1 items-end h-4 mr-3">
             <div class="w-[2px] bg-[#ff007f] h-2"></div>
@@ -188,7 +188,7 @@
         <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM.jpeg" 
              class="hero-bg-blur" alt="">
              
-        <!-- Foto principal nítida, alejada y visible al 100% -->
+        <!-- Foto principal nítida, alejada con un zoom óptimo del 85% para llenar mejor la pantalla sin recortes -->
         <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM.jpeg" 
              class="hero-image" id="main-photo" alt="Ashlin Merary Portada">
              
@@ -230,23 +230,23 @@
                 <div class="w-16 h-[1px] bg-slate-300/40 mx-auto"></div>
                 <p class="font-serif italic text-4xl md:text-5xl silver-text-gradient tracking-wide">24 de Mayo, 2026</p>
                 
-                <!-- Cuenta Regresiva plateada de gala, un 30% más pequeña que la versión anterior -->
-                <div class="flex justify-center gap-2 md:gap-3 text-center pt-8">
+                <!-- Cuenta Regresiva plateada de gala, aumentada un 20% de tamaño respecto al tamaño compacto anterior -->
+                <div class="flex justify-center gap-3 md:gap-4 text-center pt-8">
                     <div class="timer-unit text-dark">
-                        <span id="days" class="block text-base md:text-xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[6px] md:text-[8px] uppercase tracking-widest text-slate-400 font-bold">Días</span>
+                        <span id="days" class="block text-lg md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-slate-400 font-bold">Días</span>
                     </div>
                     <div class="timer-unit text-dark">
-                        <span id="hours" class="block text-base md:text-xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[6px] md:text-[8px] uppercase tracking-widest text-slate-400 font-bold">Horas</span>
+                        <span id="hours" class="block text-lg md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-slate-400 font-bold">Horas</span>
                     </div>
                     <div class="timer-unit text-dark">
-                        <span id="minutes" class="block text-base md:text-xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[6px] md:text-[8px] uppercase tracking-widest text-slate-400 font-bold">Minutos</span>
+                        <span id="minutes" class="block text-lg md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-slate-400 font-bold">Minutos</span>
                     </div>
                     <div class="timer-unit text-dark">
-                        <span id="seconds" class="block text-base md:text-xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[6px] md:text-[8px] uppercase tracking-widest text-slate-400 font-bold">Segundos</span>
+                        <span id="seconds" class="block text-lg md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-slate-400 font-bold">Segundos</span>
                     </div>
                 </div>
             </div>
@@ -469,10 +469,10 @@
                   .to('#hero-divider', { opacity: 0.6, width: 128, duration: 1.2, ease: "power2.out" }, "-=1.2")
                   .to('#hero-date', { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, "-=1.0");
 
-            // Animación lenta e inmersiva ajustada para la escala alejada
+            // Animación lenta e inmersiva ajustada para la escala alejada óptima (85% a 90%)
             document.getElementById('main-photo').animate([
-                { transform: 'scale(0.75)' },
-                { transform: 'scale(0.80)' }
+                { transform: 'scale(0.85)' },
+                { transform: 'scale(0.90)' }
             ], {
                 duration: 20000,
                 iterations: Infinity,
