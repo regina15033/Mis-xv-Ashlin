@@ -8,7 +8,7 @@
     <title>Mis xv años Ashlin Merary ❤️</title>
     <meta property="og:title" content="Mis xv años Ashlin Merary ❤️" />
     <meta property="og:description" content="Te invito a celebrar conmigo este día tan especial. ¡Haz clic para ver los detalles!" />
-    <meta property="og:image" content="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM.jpeg" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.58%20AM.jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="800" />
     <meta property="og:type" content="website" />
@@ -17,7 +17,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Mis xv años Ashlin Merary ❤️">
     <meta name="twitter:description" content="Te invito a celebrar conmigo este día tan especial.">
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM.jpeg">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.58%20AM.jpeg">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
@@ -41,6 +41,8 @@
             background-color: var(--white);
             color: var(--text-dark);
             font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
         }
 
@@ -77,14 +79,14 @@
             transform: scale(1.1);
         }
 
-        /* Foto principal nítida, alejada y visible al 100% de forma completa */
+        /* Foto principal nítida, alejada y visible al 100% */
         .hero-image {
             position: relative;
             z-index: 5;
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Garantiza que la foto se vea entera sin recortes */
-            transform: scale(0.95); /* Margen sutil para que respire mejor */
+            object-fit: contain; 
+            transform: scale(0.75); /* Se aleja un 25% más del encuadre para no recortar la imagen */
         }
 
         .hero-overlay {
@@ -99,13 +101,6 @@
             backdrop-filter: blur(10px);
             border: 1px solid var(--silver-medium);
             box-shadow: 0 20px 50px rgba(255, 0, 127, 0.1);
-        }
-
-        /* Marcos con relieve metálico plateado de alta gama */
-        .silver-frame-premium {
-            border: 8px solid white;
-            outline: 1px solid var(--silver-medium);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 0 15px rgba(203, 213, 225, 0.5);
         }
 
         .silver-border-line {
@@ -132,26 +127,26 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 50; /* Por encima de las imágenes de fondo, por debajo de los textos interactivos */
+            z-index: 50; 
         }
 
-        /* Contador con bordes de plata - Reducido un 30% en espaciados y dimensiones */
+        /* Contador con bordes de plata - Reducido un 30% ADICIONAL para un look ultra elegante */
         .timer-unit {
             background: var(--white);
-            border: 1.5px solid var(--silver-medium);
-            box-shadow: 0 7px 20px rgba(203, 213, 225, 0.2);
-            padding: 8px 10px;
-            border-radius: 14px;
-            min-width: 60px; /* Reducido de 85px */
+            border: 1px solid var(--silver-medium);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 4px 6px; 
+            border-radius: 10px;
+            min-width: 45px; 
         }
 
-        /* Ajuste de parallax para imágenes que abarcan la página completa */
+        /* Ajuste de parallax para imágenes que abarcan la página completa libre de fondos blancos */
         .full-page-photo-container {
             position: relative;
             height: 100vh;
             width: 100%;
             overflow: hidden;
-            background-color: white;
+            background-color: var(--fuchsia-dark); 
         }
     </style>
 </head>
@@ -172,7 +167,7 @@
         </div>
     </div>
 
-    <!-- Reproductor de Música Nativo (Sin iframe, carga súper rápida y limpia) -->
+    <!-- Reproductor de Música Nativo -->
     <div id="music-control" class="fixed bottom-8 right-8 z-[100] hidden opacity-0 flex items-center bg-white/95 backdrop-blur-sm p-3 rounded-full border border-[#ff007f]/30 shadow-xl cursor-pointer" onclick="toggleMusic()">
         <div id="music-bars" class="flex gap-1 items-end h-4 mr-3">
             <div class="w-[2px] bg-[#ff007f] h-2"></div>
@@ -235,30 +230,30 @@
                 <div class="w-16 h-[1px] bg-slate-300/40 mx-auto"></div>
                 <p class="font-serif italic text-4xl md:text-5xl silver-text-gradient tracking-wide">24 de Mayo, 2026</p>
                 
-                <!-- Cuenta Regresiva plateada de gala -->
-                <div class="flex justify-center gap-2 md:gap-4 text-center pt-8">
+                <!-- Cuenta Regresiva plateada de gala, un 30% más pequeña que la versión anterior -->
+                <div class="flex justify-center gap-2 md:gap-3 text-center pt-8">
                     <div class="timer-unit text-dark">
-                        <span id="days" class="block text-xl md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[7px] uppercase tracking-widest text-slate-400 font-bold">Días</span>
+                        <span id="days" class="block text-base md:text-xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[6px] md:text-[8px] uppercase tracking-widest text-slate-400 font-bold">Días</span>
                     </div>
                     <div class="timer-unit text-dark">
-                        <span id="hours" class="block text-xl md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[7px] uppercase tracking-widest text-slate-400 font-bold">Horas</span>
+                        <span id="hours" class="block text-base md:text-xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[6px] md:text-[8px] uppercase tracking-widest text-slate-400 font-bold">Horas</span>
                     </div>
                     <div class="timer-unit text-dark">
-                        <span id="minutes" class="block text-xl md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[7px] uppercase tracking-widest text-slate-400 font-bold">Minutos</span>
+                        <span id="minutes" class="block text-base md:text-xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[6px] md:text-[8px] uppercase tracking-widest text-slate-400 font-bold">Minutos</span>
                     </div>
                     <div class="timer-unit text-dark">
-                        <span id="seconds" class="block text-xl md:text-2xl font-bold text-[#ff007f] font-serif">00</span>
-                        <span class="text-[7px] uppercase tracking-widest text-slate-400 font-bold">Segundos</span>
+                        <span id="seconds" class="block text-base md:text-xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[6px] md:text-[8px] uppercase tracking-widest text-slate-400 font-bold">Segundos</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOTO 1: Pantalla Completa Limpia (Sin marcos flotantes sobre la foto) -->
+    <!-- FOTO 1: Pantalla Completa Limpia (Sin bordes ni marcos de ningún tipo) -->
     <section class="full-page-photo-container">
         <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM%20(1).jpeg" 
              alt="Ashlin Primera Foto Completa" 
@@ -272,7 +267,7 @@
             <!-- Ceremonia Religiosa (Contenido centrado simétricamente) -->
             <div class="reveal-item glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f] text-center flex flex-col items-center">
                 <div class="w-16 h-16 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8 border border-slate-200 overflow-hidden shadow-sm mx-auto">
-                    <!-- Icono personalizado de Iglesia (89013.png) -->
+                    <!-- Icono de Iglesia personalizado (89013.png) -->
                     <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/89013.png" alt="Icono Iglesia" class="w-10 h-10 object-contain">
                 </div>
                 <h3 class="font-serif text-4xl mb-4 italic text-[#2a0014]">Ceremonia Religiosa</h3>
@@ -287,7 +282,7 @@
             <!-- Recepción (Contenido centrado simétricamente) -->
             <div class="reveal-item glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f] text-center flex flex-col items-center">
                 <div class="w-16 h-16 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8 border border-slate-200 overflow-hidden shadow-sm mx-auto">
-                    <!-- Icono personalizado de Recepción (image-removebg-preview.png) -->
+                    <!-- Icono de Recepción personalizado (image-removebg-preview.png) -->
                     <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/image-removebg-preview.png" alt="Icono Recepción" class="w-10 h-10 object-contain">
                 </div>
                 <h3 class="font-serif text-4xl mb-4 italic text-[#2a0014]">Recepción</h3>
@@ -301,7 +296,7 @@
         </div>
     </section>
 
-    <!-- FOTO 2: Pantalla Completa Limpia (Sin marcos flotantes sobre la foto) -->
+    <!-- FOTO 2: Pantalla Completa Limpia (Sin bordes ni marcos de ningún tipo) -->
     <section class="full-page-photo-container">
         <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.56%20AM.jpeg" 
              alt="Ashlin Segunda Foto Completa" 
@@ -474,10 +469,10 @@
                   .to('#hero-divider', { opacity: 0.6, width: 128, duration: 1.2, ease: "power2.out" }, "-=1.2")
                   .to('#hero-date', { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, "-=1.0");
 
-            // Animación lenta e inmersiva de la foto de portada principal
+            // Animación lenta e inmersiva ajustada para la escala alejada
             document.getElementById('main-photo').animate([
-                { transform: 'scale(0.95)' },
-                { transform: 'scale(1.02)' }
+                { transform: 'scale(0.75)' },
+                { transform: 'scale(0.80)' }
             ], {
                 duration: 20000,
                 iterations: Infinity,
