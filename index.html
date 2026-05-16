@@ -124,14 +124,16 @@
         </div>
     </header>
 
-    <!-- Frase Principal e Invitación Familiar -->
+    <!-- Frase Principal, Padres, Padrinos, Invitación y Cuenta Regresiva -->
     <section class="py-32 px-6 fuchsia-gradient-bg text-white relative">
         <div class="max-w-4xl mx-auto text-center">
+            <!-- Frase Principal -->
             <p class="reveal font-serif italic text-2xl md:text-4xl leading-relaxed mb-24 max-w-2xl mx-auto">
                 "Hoy mi vida se viste de gala y mi corazón se llena de gratitud al celebrar mis hermosas quince primaveras."
             </p>
             
-            <div class="grid md:grid-cols-2 gap-16">
+            <!-- Columnas de Padres y Padrinos -->
+            <div class="grid md:grid-cols-2 gap-16 mb-24">
                 <div class="reveal">
                     <h4 class="text-[10px] tracking-[0.4em] text-white/60 mb-6 uppercase font-bold">Con el amor de mis padres</h4>
                     <p class="font-serif text-3xl italic">Jair Eulogio</p>
@@ -143,27 +145,32 @@
                     <p class="font-serif text-3xl italic text-white/70">& Nombre de Madrina</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Cuenta Regresiva -->
-    <section class="py-12 -mt-16 relative z-10 px-6">
-        <div class="max-w-4xl mx-auto flex justify-center gap-3 md:gap-6 text-center">
-            <div class="timer-unit shadow-2xl">
-                <span id="days" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
-                <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Días</span>
-            </div>
-            <div class="timer-unit shadow-2xl">
-                <span id="hours" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
-                <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Horas</span>
-            </div>
-            <div class="timer-unit shadow-2xl">
-                <span id="minutes" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
-                <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Minutos</span>
-            </div>
-            <div class="timer-unit shadow-2xl">
-                <span id="seconds" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
-                <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Segundos</span>
+            <!-- Nuevo flujo: Invitación, Fecha y Cuenta Regresiva -->
+            <div class="reveal text-center space-y-8 mt-20">
+                <p class="font-cursive text-6xl md:text-7xl text-white drop-shadow-md">Te invito a celebrar conmigo</p>
+                <div class="w-16 h-[1px] bg-white/40 mx-auto"></div>
+                <p class="font-serif italic text-4xl md:text-5xl text-white tracking-wide">24 de Mayo, 2026</p>
+                
+                <!-- Cuenta Regresiva integrada directamente debajo -->
+                <div class="flex justify-center gap-3 md:gap-6 text-center pt-8">
+                    <div class="timer-unit shadow-2xl">
+                        <span id="days" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Días</span>
+                    </div>
+                    <div class="timer-unit shadow-2xl">
+                        <span id="hours" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Horas</span>
+                    </div>
+                    <div class="timer-unit shadow-2xl">
+                        <span id="minutes" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Minutos</span>
+                    </div>
+                    <div class="timer-unit shadow-2xl">
+                        <span id="seconds" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
+                        <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Segundos</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -240,26 +247,22 @@
         </div>
     </section>
 
-    <!-- Regalos y Confirmación (RSVP) -->
+    <!-- Detalles del Evento: Lluvia de Sobres y Código de Vestimenta -->
     <section class="py-32 px-6 bg-[#fff0f6] text-center">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="reveal font-serif text-5xl mb-8 italic text-[#ff007f]">Lluvia de Sobres</h2>
-            <p class="reveal text-lg text-slate-600 mb-12 max-w-xl mx-auto leading-relaxed">
-                Tu presencia es mi mejor regalo. Si deseas tener un detalle conmigo, te agradezco que sea en efectivo en un sobre cerrado que podrás depositar en la entrada de la recepción.
-            </p>
-            
-            <div class="reveal bg-white p-12 md:p-20 rounded-[60px] shadow-[0_30px_100px_rgba(255,0,127,0.1)] border border-[#ff007f]/10 inline-block w-full">
-                <h2 class="font-cursive text-7xl mb-6 text-[#ff007f]">¿Nos acompañas?</h2>
-                <p class="text-[#ff007f]/80 mb-12 tracking-widest uppercase text-[9px] font-black">Por favor confirma antes del 10 de Mayo</p>
-                
-                <button onclick="confirmar()" class="group relative px-16 py-6 bg-[#ff007f] text-white font-black rounded-full overflow-hidden transition-all hover:scale-105 shadow-2xl">
-                    <span class="relative z-10 tracking-[0.2em] text-xs font-sans">CONFIRMAR ASISTENCIA</span>
-                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                </button>
+        <div class="max-w-3xl mx-auto space-y-16">
+            <!-- Lluvia de Sobres -->
+            <div class="reveal">
+                <h2 class="font-serif text-5xl mb-8 italic text-[#ff007f]">Lluvia de Sobres</h2>
+                <p class="text-lg text-slate-600 max-w-xl mx-auto leading-relaxed">
+                    Tu presencia es mi mejor regalo. Si deseas tener un detalle conmigo, te agradezco que sea en efectivo en un sobre cerrado que podrás depositar en la entrada de la recepción.
+                </p>
+            </div>
 
-                <div class="mt-16 flex justify-center items-center gap-6 opacity-60">
+            <!-- Vestimenta Formal -->
+            <div class="reveal pt-8">
+                <div class="flex justify-center items-center gap-6 opacity-80">
                     <div class="h-[1px] w-12 bg-[#ff007f]/40"></div>
-                    <span class="text-[9px] tracking-[0.4em] font-black text-[#ff007f]">VESTIMENTA FORMAL</span>
+                    <span class="text-xs tracking-[0.4em] font-bold text-[#ff007f]">VESTIMENTA FORMAL</span>
                     <div class="h-[1px] w-12 bg-[#ff007f]/40"></div>
                 </div>
             </div>
@@ -374,13 +377,6 @@
             document.getElementById("minutes").innerText = Math.floor((d % 3600000) / 60000).toString().padStart(2, '0');
             document.getElementById("seconds").innerText = Math.floor((d % 60000) / 1000).toString().padStart(2, '0');
         }, 1000);
-
-        // Confirmación de asistencia por WhatsApp
-        function confirmar() {
-            const num = "1234567890"; 
-            const msg = encodeURIComponent("¡Hola! Confirmo mi asistencia para los XV de Ashlin Merary. ¡Estamos listos para celebrar!");
-            window.open(`https://wa.me/${num}?text=${msg}`, '_blank');
-        }
     </script>
 </body>
 </html>
