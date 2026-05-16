@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis XV - Ashlin Merary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Paleta de colores basada en el fucsia de la tela y detalles plateados */
+        :root {
+            --fuchsia: #ff007f;
+            --fuchsia-dark: #b30059;
+            --fuchsia-light: #fff0f6;
+            --silver: #cbd5e1;
+            --white: #ffffff;
+            --text-dark: #2a0014;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-cursive { font-family: 'Pinyon Script', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        .fuchsia-gradient-bg {
+            background: linear-gradient(135deg, var(--fuchsia) 0%, var(--fuchsia-dark) 100%);
+        }
+
+        .hero-image-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            background-color: var(--fuchsia);
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(255, 0, 127, 0.2) 0%, rgba(255, 0, 127, 0.5) 70%, var(--fuchsia) 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--silver);
+            box-shadow: 0 20px 50px rgba(255, 0, 127, 0.15);
+        }
+
+        .silver-frame {
+            border: 8px solid white;
+            box-shadow: 0 0 0 1px var(--silver), 0 15px 35px rgba(255, 0, 127, 0.2);
+        }
+
+        .reveal { opacity: 0; transform: translateY(40px); }
+        
+        @keyframes pulse-music {
+            from { height: 4px; }
+            to { height: 16px; }
+        }
+
+        .timer-unit {
+            background: var(--white);
+            border: 2px solid var(--fuchsia);
+            padding: 15px;
+            border-radius: 20px;
+            min-width: 85px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pantalla de Bienvenida -->
+    <div id="welcome-overlay" class="fixed inset-0 z-[2000] bg-white flex flex-col items-center justify-center transition-all duration-1000">
+        <div class="text-center p-8">
+            <p class="text-[#ff007f] tracking-[0.5em] text-[10px] mb-4 uppercase font-bold">Estás invitado a celebrar</p>
+            <h1 class="font-cursive text-7xl mb-12 text-[#ff007f]">Ashlin Merary</h1>
+            <button onclick="startExperience()" class="group relative px-12 py-4 overflow-hidden border-2 border-[#ff007f] rounded-full transition-all">
+                <span class="relative z-10 font-bold tracking-widest text-sm text-[#ff007f] group-hover:text-white transition-colors uppercase font-sans">Abrir Invitación</span>
+                <div class="absolute inset-0 bg-[#ff007f] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Reproductor de Música -->
+    <div id="music-control" class="fixed bottom-8 right-8 z-[100] hidden opacity-0 flex items-center bg-white/95 backdrop-blur-sm p-3 rounded-full border border-[#ff007f]/30 shadow-xl cursor-pointer" onclick="toggleMusic()">
+        <div id="music-bars" class="flex gap-1 items-end h-4 mr-3">
+            <div class="w-[2px] bg-[#ff007f] h-2"></div>
+            <div class="w-[2px] bg-[#ff007f] h-4"></div>
+            <div class="w-[2px] bg-[#ff007f] h-3"></div>
+        </div>
+        <span class="text-[9px] font-black tracking-widest uppercase text-[#ff007f] mr-2">Música</span>
+        <iframe id="yt-player" class="hidden" src="https://www.youtube.com/embed/S-vYg7N9W7k?enablejsapi=1" allow="autoplay"></iframe>
+    </div>
+
+    <!-- Sección de Portada -->
+    <header class="relative hero-image-container">
+        <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM.jpeg" 
+             class="hero-image" id="main-photo" alt="Ashlin Merary Portada">
+        <div class="hero-overlay"></div>
+        
+        <div class="absolute inset-0 flex flex-col items-center justify-end pb-32 text-center px-4">
+            <div class="reveal">
+                <p class="text-white/90 tracking-[0.8em] text-[10px] mb-6 uppercase font-bold">Mis XV Años</p>
+                <h1 class="font-cursive text-[20vw] md:text-[12rem] leading-none text-white drop-shadow-2xl">Ashlin Merary</h1>
+                <div class="w-24 h-[1px] bg-white/50 mx-auto my-8"></div>
+                <p class="font-serif italic text-3xl text-white">24 de Mayo, 2026</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Frase Principal e Invitación Familiar -->
+    <section class="py-32 px-6 fuchsia-gradient-bg text-white relative">
+        <div class="max-w-4xl mx-auto text-center">
+            <p class="reveal font-serif italic text-2xl md:text-4xl leading-relaxed mb-24 max-w-2xl mx-auto">
+                "Hoy mi vida se viste de gala y mi corazón se llena de gratitud al celebrar mis hermosas quince primaveras."
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-16">
+                <div class="reveal">
+                    <h4 class="text-[10px] tracking-[0.4em] text-white/60 mb-6 uppercase font-bold">Con el amor de mis padres</h4>
+                    <p class="font-serif text-3xl italic">Jair Eulogio</p>
+                    <p class="font-serif text-3xl italic text-white/70">& Christian González</p>
+                </div>
+                <div class="reveal">
+                    <h4 class="text-[10px] tracking-[0.4em] text-white/60 mb-6 uppercase font-bold">Mis Padrinos</h4>
+                    <p class="font-serif text-3xl italic">Nombre de Padrino</p>
+                    <p class="font-serif text-3xl italic text-white/70">& Nombre de Madrina</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cuenta Regresiva -->
+    <section class="py-12 -mt-16 relative z-10 px-6">
+        <div class="max-w-4xl mx-auto flex justify-center gap-3 md:gap-6 text-center">
+            <div class="timer-unit shadow-2xl">
+                <span id="days" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
+                <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Días</span>
+            </div>
+            <div class="timer-unit shadow-2xl">
+                <span id="hours" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
+                <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Horas</span>
+            </div>
+            <div class="timer-unit shadow-2xl">
+                <span id="minutes" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
+                <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Minutos</span>
+            </div>
+            <div class="timer-unit shadow-2xl">
+                <span id="seconds" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
+                <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Segundos</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería de Fotos -->
+    <section class="py-24 px-6 bg-white overflow-hidden">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-cursive text-6xl text-[#ff007f]">Mis Fotos Especiales</h2>
+                <div class="w-16 h-[2px] bg-[#ff007f] mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12 reveal">
+                <!-- Foto 1 -->
+                <div class="silver-frame rounded-2xl overflow-hidden group">
+                    <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM%20(1).jpeg" 
+                         alt="Ashlin Gala 1" 
+                         class="w-full h-auto object-cover transition-transform duration-[3000ms] group-hover:scale-105">
+                </div>
+                
+                <!-- Foto 2 -->
+                <div class="silver-frame rounded-2xl overflow-hidden group">
+                    <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.56%20AM.jpeg" 
+                         alt="Ashlin Gala 2" 
+                         class="w-full h-auto object-cover transition-transform duration-[3000ms] group-hover:scale-105">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Datos del Evento -->
+    <section class="py-24 px-6 bg-[#fff0f6]">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
+            <!-- Ceremonia Religiosa -->
+            <div class="reveal glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f] transition-transform hover:-translate-y-2 duration-500">
+                <div class="w-14 h-14 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8">
+                    <svg class="w-7 h-7 text-[#ff007f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-4xl mb-4 italic text-[#2a0014]">Ceremonia Religiosa</h3>
+                <p class="text-xl font-bold mb-4 text-[#ff007f]">Saint Tomás the Apostól</p>
+                <p class="text-slate-600 leading-relaxed mb-10 font-medium">
+                    12:30 PM <br>
+                    80 Saint Thomas Way, Alabaster, AL 35115
+                </p>
+                <a href="https://maps.google.com/?q=80+Saint+Thomas+way+35115" target="_blank" class="inline-block px-10 py-4 bg-[#ff007f] text-white font-bold rounded-full text-[10px] uppercase tracking-[0.2em] hover:bg-[#b30059] shadow-xl transition-all">Ver Mapa</a>
+            </div>
+
+            <!-- Recepción -->
+            <div class="reveal glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f] transition-transform hover:-translate-y-2 duration-500">
+                <div class="w-14 h-14 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8">
+                    <svg class="w-7 h-7 text-[#ff007f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-4xl mb-4 italic text-[#2a0014]">Recepción</h3>
+                <p class="text-xl font-bold mb-4 text-[#ff007f]">Recepción Familiar</p>
+                <p class="text-slate-600 leading-relaxed mb-10 font-medium">
+                    A partir de las 4:30 PM <br>
+                    3469 Smokey Rd, Alabaster, AL 35007
+                </p>
+                <a href="https://maps.google.com/?q=3469+Smokey+Rd+Alabaster+Al+35007" target="_blank" class="inline-block px-10 py-4 bg-[#ff007f] text-white font-bold rounded-full text-[10px] uppercase tracking-[0.2em] hover:bg-[#b30059] shadow-xl transition-all font-sans">Ver Mapa</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Frase célebre de Quinceañera -->
+    <section class="py-24 px-6 text-center bg-white border-y border-[#ff007f]/10">
+        <div class="max-w-2xl mx-auto">
+            <span class="text-4xl block mb-6">🌸</span>
+            <p class="font-cursive text-5xl md:text-6xl text-[#ff007f] mb-4">"Quince primaveras tienes que cumplir..."</p>
+            <p class="text-xs tracking-[0.4em] text-[#ff007f] opacity-60 italic">- Vicente Fernández</p>
+        </div>
+    </section>
+
+    <!-- Regalos y Confirmación (RSVP) -->
+    <section class="py-32 px-6 bg-[#fff0f6] text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="reveal font-serif text-5xl mb-8 italic text-[#ff007f]">Lluvia de Sobres</h2>
+            <p class="reveal text-lg text-slate-600 mb-12 max-w-xl mx-auto leading-relaxed">
+                Tu presencia es mi mejor regalo. Si deseas tener un detalle conmigo, te agradezco que sea en efectivo en un sobre cerrado que podrás depositar en la entrada de la recepción.
+            </p>
+            
+            <div class="reveal bg-white p-12 md:p-20 rounded-[60px] shadow-[0_30px_100px_rgba(255,0,127,0.1)] border border-[#ff007f]/10 inline-block w-full">
+                <h2 class="font-cursive text-7xl mb-6 text-[#ff007f]">¿Nos acompañas?</h2>
+                <p class="text-[#ff007f]/80 mb-12 tracking-widest uppercase text-[9px] font-black">Por favor confirma antes del 10 de Mayo</p>
+                
+                <button onclick="confirmar()" class="group relative px-16 py-6 bg-[#ff007f] text-white font-black rounded-full overflow-hidden transition-all hover:scale-105 shadow-2xl">
+                    <span class="relative z-10 tracking-[0.2em] text-xs font-sans">CONFIRMAR ASISTENCIA</span>
+                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                </button>
+
+                <div class="mt-16 flex justify-center items-center gap-6 opacity-60">
+                    <div class="h-[1px] w-12 bg-[#ff007f]/40"></div>
+                    <span class="text-[9px] tracking-[0.4em] font-black text-[#ff007f]">VESTIMENTA FORMAL</span>
+                    <div class="h-[1px] w-12 bg-[#ff007f]/40"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Cierre Final: Pantalla Completa (Full Screen - 100vh) -->
+    <section class="relative h-screen w-full overflow-hidden flex flex-col justify-end text-center">
+        <!-- Imagen de fondo a pantalla completa -->
+        <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.58%20AM.jpeg" 
+             alt="Ashlin Gala Final" 
+             class="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105" 
+             id="final-photo">
+        
+        <!-- Gradiente sofisticada fucsia-oscura para dar máxima legibilidad de borde a borde -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#2a0014]/95 via-[#ff007f]/40 to-transparent"></div>
+        
+        <!-- Contenido textual superpuesto sobre la imagen de fondo -->
+        <div class="relative z-10 pb-32 px-6 reveal flex flex-col items-center justify-end h-full">
+            <h2 class="font-cursive text-7xl md:text-[11rem] leading-none mb-6 drop-shadow-2xl text-white">¡Te Espero!</h2>
+            <p class="text-sm md:text-xl text-white/95 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-medium tracking-wide">
+                Para compartir juntos momentos inolvidables en este nuevo capítulo de mi vida.
+            </p>
+            <div class="w-24 h-[1px] bg-white/40 my-8"></div>
+            <p class="text-[10px] tracking-[0.5em] text-white/70 font-bold uppercase">Ashlin Merary • 2026</p>
+        </div>
+    </section>
+
+    <!-- Pie de Página -->
+    <footer class="py-12 text-center bg-[#fff0f6] border-t border-[#ff007f]/10">
+        <p class="text-[10px] tracking-[1em] text-[#ff007f] font-black uppercase">Ashlin Merary • 2026 • Alabaster, AL</p>
+    </footer>
+
+    <script>
+        // Iniciar experiencia al hacer clic en el botón de bienvenida
+        function startExperience() {
+            const overlay = document.getElementById('welcome-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 1000);
+            
+            document.getElementById('music-control').classList.remove('hidden');
+            gsap.to('#music-control', { opacity: 1, duration: 1, delay: 1 });
+            
+            // Animación lenta e inmersiva de la portada principal
+            document.getElementById('main-photo').animate([
+                { transform: 'scale(1.1)' },
+                { transform: 'scale(1.0)' }
+            ], {
+                duration: 20000,
+                iterations: Infinity,
+                direction: 'alternate',
+                easing: 'linear'
+            });
+
+            // Animación lenta e inmersiva de la foto final de fondo
+            document.getElementById('final-photo').animate([
+                { transform: 'scale(1.0)' },
+                { transform: 'scale(1.1)' }
+            ], {
+                duration: 25000,
+                iterations: Infinity,
+                direction: 'alternate',
+                easing: 'linear'
+            });
+
+            toggleMusic(true);
+            initScrollAnimations();
+        }
+
+        // Animaciones de entrada suaves al hacer scroll
+        function initScrollAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+            gsap.utils.toArray('.reveal').forEach((el) => {
+                gsap.to(el, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.5,
+                    ease: "power4.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 90%",
+                    }
+                });
+            });
+        }
+
+        let isPlaying = false;
+        // Control de reproductor de YouTube integrado para la música
+        function toggleMusic(forcePlay = false) {
+            const player = document.getElementById('yt-player');
+            const bars = document.getElementById('music-bars').children;
+            
+            if (!isPlaying || forcePlay) {
+                player.src += "&autoplay=1";
+                isPlaying = true;
+                for (let bar of bars) bar.style.animation = 'pulse-music 0.6s infinite alternate';
+            } else {
+                player.src = player.src.split('&')[0];
+                isPlaying = false;
+                for (let bar of bars) bar.style.animation = 'none';
+            }
+        }
+
+        // Contador de cuenta regresiva en tiempo real
+        const target = new Date("May 24, 2026 12:30:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const d = target - now;
+            if (d < 0) return;
+            document.getElementById("days").innerText = Math.floor(d / 86400000).toString().padStart(2, '0');
+            document.getElementById("hours").innerText = Math.floor((d % 86400000) / 3600000).toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = Math.floor((d % 3600000) / 60000).toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = Math.floor((d % 60000) / 1000).toString().padStart(2, '0');
+        }, 1000);
+
+        // Confirmación de asistencia por WhatsApp
+        function confirmar() {
+            const num = "1234567890"; 
+            const msg = encodeURIComponent("¡Hola! Confirmo mi asistencia para los XV de Ashlin Merary. ¡Estamos listos para celebrar!");
+            window.open(`https://wa.me/${num}?text=${msg}`, '_blank');
+        }
+    </script>
+</body>
+</html>
