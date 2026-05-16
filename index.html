@@ -10,12 +10,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <style>
-        /* Paleta de colores basada en el fucsia de la tela y detalles plateados */
+        /* Paleta de colores premium fucsia vibrante y plata metálica */
         :root {
             --fuchsia: #ff007f;
             --fuchsia-dark: #b30059;
             --fuchsia-light: #fff0f6;
-            --silver: #cbd5e1;
+            --silver-light: #f1f5f9;
+            --silver-medium: #cbd5e1;
+            --silver-dark: #94a3b8;
             --white: #ffffff;
             --text-dark: #2a0014;
         }
@@ -34,6 +36,13 @@
             background: linear-gradient(135deg, var(--fuchsia) 0%, var(--fuchsia-dark) 100%);
         }
 
+        /* Gradiente de texto plateado metálico */
+        .silver-text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #aeafb2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .hero-image-container {
             position: relative;
             height: 100vh;
@@ -46,44 +55,81 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transform: scale(1.1);
+            object-position: center 12%; 
+            transform: scale(1.0);
         }
 
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(255, 0, 127, 0.2) 0%, rgba(255, 0, 127, 0.5) 70%, var(--fuchsia) 100%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 65%, var(--fuchsia) 100%);
         }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid var(--silver);
-            box-shadow: 0 20px 50px rgba(255, 0, 127, 0.15);
+            border: 1px solid var(--silver-medium);
+            box-shadow: 0 20px 50px rgba(255, 0, 127, 0.1);
         }
 
-        .silver-frame {
+        /* Marcos con relieve metálico plateado de alta gama */
+        .silver-frame-premium {
             border: 8px solid white;
-            box-shadow: 0 0 0 1px var(--silver), 0 15px 35px rgba(255, 0, 127, 0.2);
+            outline: 1px solid var(--silver-medium);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 0 15px rgba(203, 213, 225, 0.5);
         }
 
-        .reveal { opacity: 0; transform: translateY(40px); }
+        .silver-border-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--silver-medium), transparent);
+        }
+
+        /* Clase inicial de animación de entrada suave para GSAP */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(50px);
+        }
         
         @keyframes pulse-music {
             from { height: 4px; }
             to { height: 16px; }
         }
 
+        /* Contenedor del lienzo de lluvia de brillos */
+        #sparkle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50; /* Por encima de las imágenes de fondo, por debajo de los textos interactivos */
+        }
+
+        /* Contador con bordes de plata */
         .timer-unit {
             background: var(--white);
-            border: 2px solid var(--fuchsia);
+            border: 2px solid var(--silver-medium);
+            box-shadow: 0 10px 30px rgba(203, 213, 225, 0.3);
             padding: 15px;
             border-radius: 20px;
             min-width: 85px;
         }
+
+        /* Ajuste de parallax para imágenes que abarcan la página completa */
+        .full-page-photo-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            background-color: white;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Canvas para la lluvia de brillos plateados cayendo de manera realista -->
+    <canvas id="sparkle-canvas"></canvas>
 
     <!-- Pantalla de Bienvenida -->
     <div id="welcome-overlay" class="fixed inset-0 z-[2000] bg-white flex flex-col items-center justify-center transition-all duration-1000">
@@ -97,7 +143,7 @@
         </div>
     </div>
 
-    <!-- Reproductor de Música -->
+    <!-- Reproductor de Música Nativo (Sin iframe, carga súper rápida y limpia) -->
     <div id="music-control" class="fixed bottom-8 right-8 z-[100] hidden opacity-0 flex items-center bg-white/95 backdrop-blur-sm p-3 rounded-full border border-[#ff007f]/30 shadow-xl cursor-pointer" onclick="toggleMusic()">
         <div id="music-bars" class="flex gap-1 items-end h-4 mr-3">
             <div class="w-[2px] bg-[#ff007f] h-2"></div>
@@ -105,7 +151,11 @@
             <div class="w-[2px] bg-[#ff007f] h-3"></div>
         </div>
         <span class="text-[9px] font-black tracking-widest uppercase text-[#ff007f] mr-2">Música</span>
-        <iframe id="yt-player" class="hidden" src="https://www.youtube.com/embed/S-vYg7N9W7k?enablejsapi=1" allow="autoplay"></iframe>
+        
+        <!-- Elemento de Audio HTML5 apuntando al MP3 directo de tu repositorio -->
+        <audio id="bg-music" loop preload="auto">
+            <source src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/ytmp3free.cc_serenata-15-primaveras-youtubemp3free.org.mp3" type="audio/mpeg">
+        </audio>
     </div>
 
     <!-- Sección de Portada -->
@@ -113,60 +163,57 @@
         <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM.jpeg" 
              class="hero-image" id="main-photo" alt="Ashlin Merary Portada">
         <div class="hero-overlay"></div>
-        
-        <div class="absolute inset-0 flex flex-col items-center justify-end pb-32 text-center px-4">
-            <div class="reveal">
-                <p class="text-white/90 tracking-[0.8em] text-[10px] mb-6 uppercase font-bold">Mis XV Años</p>
-                <h1 class="font-cursive text-[20vw] md:text-[12rem] leading-none text-white drop-shadow-2xl">Ashlin Merary</h1>
-                <div class="w-24 h-[1px] bg-white/50 mx-auto my-8"></div>
-                <p class="font-serif italic text-3xl text-white">24 de Mayo, 2026</p>
+
+        <!-- Texto subido a la parte superior para no obstruir la imagen de Ashlin -->
+        <div class="absolute inset-0 flex flex-col items-center justify-start pt-20 md:pt-28 text-center px-4">
+            <div class="select-none" id="hero-text-block">
+                <p id="hero-subtitle" class="text-white/95 tracking-[0.8em] text-[11px] mb-4 uppercase font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] opacity-0 translate-y-4">Mis XV Años</p>
+                <h1 id="hero-title" class="font-cursive text-[18vw] md:text-[9.5rem] leading-none text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] scale-95 opacity-0">Ashlin Merary</h1>
+                <div id="hero-divider" class="w-32 h-[2px] bg-gradient-to-r from-transparent via-slate-300 to-transparent mx-auto my-6 drop-shadow opacity-0"></div>
+                <p id="hero-date" class="font-serif italic text-2xl md:text-3xl text-slate-100 drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)] opacity-0 -translate-y-4">24 de Mayo, 2026</p>
             </div>
         </div>
     </header>
 
-    <!-- Frase Principal, Padres, Padrinos, Invitación y Cuenta Regresiva -->
-    <section class="py-32 px-6 fuchsia-gradient-bg text-white relative">
+    <!-- Frase Principal, Padres, Invitación y Cuenta Regresiva -->
+    <section class="py-32 px-6 fuchsia-gradient-bg text-white relative overflow-hidden">
         <div class="max-w-4xl mx-auto text-center">
-            <!-- Frase Principal -->
-            <p class="reveal font-serif italic text-2xl md:text-4xl leading-relaxed mb-24 max-w-2xl mx-auto">
+            <!-- Frase Principal con animación de scroll -->
+            <p class="reveal-item font-serif italic text-2xl md:text-4xl leading-relaxed mb-24 max-w-2xl mx-auto">
                 "Hoy mi vida se viste de gala y mi corazón se llena de gratitud al celebrar mis hermosas quince primaveras."
             </p>
             
-            <!-- Columnas de Padres y Padrinos -->
-            <div class="grid md:grid-cols-2 gap-16 mb-24">
-                <div class="reveal">
-                    <h4 class="text-[10px] tracking-[0.4em] text-white/60 mb-6 uppercase font-bold">Con el amor de mis padres</h4>
-                    <p class="font-serif text-3xl italic">Jair Eulogio</p>
-                    <p class="font-serif text-3xl italic text-white/70">& Christian González</p>
-                </div>
-                <div class="reveal">
-                    <h4 class="text-[10px] tracking-[0.4em] text-white/60 mb-6 uppercase font-bold">Mis Padrinos</h4>
-                    <p class="font-serif text-3xl italic">Nombre de Padrino</p>
-                    <p class="font-serif text-3xl italic text-white/70">& Nombre de Madrina</p>
-                </div>
+            <!-- Sección de Padres con acentos de plata (Centrada de forma elegante) -->
+            <div class="reveal-item space-y-3 mb-24 max-w-xl mx-auto">
+                <h4 class="text-[10px] tracking-[0.4em] text-slate-200/80 mb-4 uppercase font-bold">Con el amor de mis padres</h4>
+                <p class="font-serif text-3xl md:text-4xl italic text-white">Jair Eulogio</p>
+                <p class="font-serif text-3xl md:text-4xl italic silver-text-gradient">& Christian González</p>
             </div>
 
-            <!-- Nuevo flujo: Invitación, Fecha y Cuenta Regresiva -->
-            <div class="reveal text-center space-y-8 mt-20">
+            <!-- Separador de plata -->
+            <div class="silver-border-line w-1/2 mx-auto my-12 opacity-60"></div>
+
+            <!-- Flujo: Invitación, Fecha y Cuenta Regresiva -->
+            <div class="reveal-item text-center space-y-8 mt-20">
                 <p class="font-cursive text-6xl md:text-7xl text-white drop-shadow-md">Te invito a celebrar conmigo</p>
-                <div class="w-16 h-[1px] bg-white/40 mx-auto"></div>
-                <p class="font-serif italic text-4xl md:text-5xl text-white tracking-wide">24 de Mayo, 2026</p>
+                <div class="w-16 h-[1px] bg-slate-300/40 mx-auto"></div>
+                <p class="font-serif italic text-4xl md:text-5xl silver-text-gradient tracking-wide">24 de Mayo, 2026</p>
                 
-                <!-- Cuenta Regresiva integrada directamente debajo -->
+                <!-- Cuenta Regresiva plateada de gala -->
                 <div class="flex justify-center gap-3 md:gap-6 text-center pt-8">
-                    <div class="timer-unit shadow-2xl">
+                    <div class="timer-unit text-dark">
                         <span id="days" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
                         <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Días</span>
                     </div>
-                    <div class="timer-unit shadow-2xl">
+                    <div class="timer-unit text-dark">
                         <span id="hours" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
                         <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Horas</span>
                     </div>
-                    <div class="timer-unit shadow-2xl">
+                    <div class="timer-unit text-dark">
                         <span id="minutes" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
                         <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Minutos</span>
                     </div>
-                    <div class="timer-unit shadow-2xl">
+                    <div class="timer-unit text-dark">
                         <span id="seconds" class="block text-3xl font-bold text-[#ff007f] font-serif">00</span>
                         <span class="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Segundos</span>
                     </div>
@@ -175,41 +222,26 @@
         </div>
     </section>
 
-    <!-- Galería de Fotos -->
-    <section class="py-24 px-6 bg-white overflow-hidden">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16 reveal">
-                <h2 class="font-cursive text-6xl text-[#ff007f]">Mis Fotos Especiales</h2>
-                <div class="w-16 h-[2px] bg-[#ff007f] mx-auto mt-4"></div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8 lg:gap-12 reveal">
-                <!-- Foto 1 -->
-                <div class="silver-frame rounded-2xl overflow-hidden group">
-                    <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM%20(1).jpeg" 
-                         alt="Ashlin Gala 1" 
-                         class="w-full h-auto object-cover transition-transform duration-[3000ms] group-hover:scale-105">
-                </div>
-                
-                <!-- Foto 2 -->
-                <div class="silver-frame rounded-2xl overflow-hidden group">
-                    <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.56%20AM.jpeg" 
-                         alt="Ashlin Gala 2" 
-                         class="w-full h-auto object-cover transition-transform duration-[3000ms] group-hover:scale-105">
-                </div>
-            </div>
-        </div>
+    <!-- FOTO 1: Pantalla Completa Limpia (Después de la Cuenta Regresiva) con animación de revelado de máscara -->
+    <section class="full-page-photo-container">
+        <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.55%20AM%20(1).jpeg" 
+             alt="Ashlin Primera Foto Completa" 
+             class="absolute inset-0 w-full h-full object-cover object-center scale-[1.08] transition-transform duration-[1000ms] ease-out"
+             id="photo-showcase-1">
+        
+        <!-- Sutil marco plateado flotante que bordea la pantalla entera para un look de revista de gala -->
+        <div class="absolute inset-4 pointer-events-none border border-white/30 rounded-[20px] shadow-[inset_0_0_80px_rgba(0,0,0,0.15)]"></div>
+        <div class="absolute inset-5 pointer-events-none border border-slate-300/20 rounded-[16px]"></div>
     </section>
 
     <!-- Datos del Evento -->
-    <section class="py-24 px-6 bg-[#fff0f6]">
+    <section class="py-24 px-6 bg-[#fff0f6] relative">
         <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
             <!-- Ceremonia Religiosa -->
-            <div class="reveal glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f] transition-transform hover:-translate-y-2 duration-500">
-                <div class="w-14 h-14 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8">
-                    <svg class="w-7 h-7 text-[#ff007f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                    </svg>
+            <div class="reveal-item glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f]">
+                <div class="w-16 h-16 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8 border border-slate-200 overflow-hidden shadow-sm">
+                    <!-- Icono personalizado de Iglesia (89013.png) -->
+                    <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/89013.png" alt="Icono Iglesia" class="w-10 h-10 object-contain">
                 </div>
                 <h3 class="font-serif text-4xl mb-4 italic text-[#2a0014]">Ceremonia Religiosa</h3>
                 <p class="text-xl font-bold mb-4 text-[#ff007f]">Saint Tomás the Apostól</p>
@@ -217,15 +249,14 @@
                     12:30 PM <br>
                     80 Saint Thomas Way, Alabaster, AL 35115
                 </p>
-                <a href="https://maps.google.com/?q=80+Saint+Thomas+way+35115" target="_blank" class="inline-block px-10 py-4 bg-[#ff007f] text-white font-bold rounded-full text-[10px] uppercase tracking-[0.2em] hover:bg-[#b30059] shadow-xl transition-all">Ver Mapa</a>
+                <a href="https://maps.google.com/?q=80+Saint+Thomas+way+35115" target="_blank" class="inline-block px-10 py-4 bg-[#ff007f] hover:bg-[#b30059] text-white font-bold rounded-full text-[10px] uppercase tracking-[0.2em] shadow-xl transition-all border-b-2 border-slate-300">Ver Mapa</a>
             </div>
 
             <!-- Recepción -->
-            <div class="reveal glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f] transition-transform hover:-translate-y-2 duration-500">
-                <div class="w-14 h-14 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8">
-                    <svg class="w-7 h-7 text-[#ff007f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+            <div class="reveal-item glass-card p-12 rounded-[40px] border-t-8 border-[#ff007f]">
+                <div class="w-16 h-16 bg-[#fff0f6] rounded-full flex items-center justify-center mb-8 border border-slate-200 overflow-hidden shadow-sm">
+                    <!-- Icono personalizado de Recepción (image-removebg-preview.png) -->
+                    <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/image-removebg-preview.png" alt="Icono Recepción" class="w-10 h-10 object-contain">
                 </div>
                 <h3 class="font-serif text-4xl mb-4 italic text-[#2a0014]">Recepción</h3>
                 <p class="text-xl font-bold mb-4 text-[#ff007f]">Recepción Familiar</p>
@@ -233,38 +264,42 @@
                     A partir de las 4:30 PM <br>
                     3469 Smokey Rd, Alabaster, AL 35007
                 </p>
-                <a href="https://maps.google.com/?q=3469+Smokey+Rd+Alabaster+Al+35007" target="_blank" class="inline-block px-10 py-4 bg-[#ff007f] text-white font-bold rounded-full text-[10px] uppercase tracking-[0.2em] hover:bg-[#b30059] shadow-xl transition-all font-sans">Ver Mapa</a>
+                <a href="https://maps.google.com/?q=3469+Smokey+Rd+Alabaster+Al+35007" target="_blank" class="inline-block px-10 py-4 bg-[#ff007f] hover:bg-[#b30059] text-white font-bold rounded-full text-[10px] uppercase tracking-[0.2em] shadow-xl transition-all font-sans border-b-2 border-slate-300">Ver Mapa</a>
             </div>
         </div>
     </section>
 
+    <!-- FOTO 2: Pantalla Completa Limpia (Después de las Ubicaciones/Recepción) -->
+    <section class="full-page-photo-container">
+        <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.56%20AM.jpeg" 
+             alt="Ashlin Segunda Foto Completa" 
+             class="absolute inset-0 w-full h-full object-cover object-center scale-[1.08] transition-transform duration-[1000ms] ease-out"
+             id="photo-showcase-2">
+             
+        <!-- Acabados plateados minimalistas flotantes para un encuadre de gala -->
+        <div class="absolute inset-4 pointer-events-none border border-white/30 rounded-[20px] shadow-[inset_0_0_80px_rgba(0,0,0,0.15)]"></div>
+        <div class="absolute inset-5 pointer-events-none border border-slate-300/20 rounded-[16px]"></div>
+    </section>
+
     <!-- Frase célebre de Quinceañera -->
-    <section class="py-24 px-6 text-center bg-white border-y border-[#ff007f]/10">
-        <div class="max-w-2xl mx-auto">
+    <section class="py-24 px-6 text-center bg-white border-y border-[#ff007f]/10 relative">
+        <div class="max-w-2xl mx-auto reveal-item">
             <span class="text-4xl block mb-6">🌸</span>
             <p class="font-cursive text-5xl md:text-6xl text-[#ff007f] mb-4">"Quince primaveras tienes que cumplir..."</p>
             <p class="text-xs tracking-[0.4em] text-[#ff007f] opacity-60 italic">- Vicente Fernández</p>
         </div>
     </section>
 
-    <!-- Detalles del Evento: Lluvia de Sobres y Código de Vestimenta -->
-    <section class="py-32 px-6 bg-[#fff0f6] text-center">
+    <!-- Detalles del Evento: Lluvia de Sobres -->
+    <section class="py-32 px-6 bg-[#fff0f6] text-center relative">
         <div class="max-w-3xl mx-auto space-y-16">
-            <!-- Lluvia de Sobres -->
-            <div class="reveal">
-                <h2 class="font-serif text-5xl mb-8 italic text-[#ff007f]">Lluvia de Sobres</h2>
+            <!-- Lluvia de Sobres con toque de plata y aparición gradual -->
+            <div class="reveal-item">
+                <h2 class="font-serif text-5xl mb-4 italic text-[#ff007f]">Lluvia de Sobres</h2>
+                <div class="silver-border-line w-20 mx-auto mb-8"></div>
                 <p class="text-lg text-slate-600 max-w-xl mx-auto leading-relaxed">
                     Tu presencia es mi mejor regalo. Si deseas tener un detalle conmigo, te agradezco que sea en efectivo en un sobre cerrado que podrás depositar en la entrada de la recepción.
                 </p>
-            </div>
-
-            <!-- Vestimenta Formal -->
-            <div class="reveal pt-8">
-                <div class="flex justify-center items-center gap-6 opacity-80">
-                    <div class="h-[1px] w-12 bg-[#ff007f]/40"></div>
-                    <span class="text-xs tracking-[0.4em] font-bold text-[#ff007f]">VESTIMENTA FORMAL</span>
-                    <div class="h-[1px] w-12 bg-[#ff007f]/40"></div>
-                </div>
             </div>
         </div>
     </section>
@@ -274,19 +309,19 @@
         <!-- Imagen de fondo a pantalla completa -->
         <img src="https://raw.githubusercontent.com/regina15033/Mis-xv-Ashlin/main/WhatsApp%20Image%202026-05-16%20at%209.05.58%20AM.jpeg" 
              alt="Ashlin Gala Final" 
-             class="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105" 
+             class="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out scale-[1.08]" 
              id="final-photo">
         
         <!-- Gradiente sofisticada fucsia-oscura para dar máxima legibilidad de borde a borde -->
-        <div class="absolute inset-0 bg-gradient-to-t from-[#2a0014]/95 via-[#ff007f]/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#2a0014]/95 via-[#ff007f]/40 to-transparent z-[11]"></div>
         
-        <!-- Contenido textual superpuesto sobre la imagen de fondo -->
-        <div class="relative z-10 pb-32 px-6 reveal flex flex-col items-center justify-end h-full">
+        <!-- Contenido textual superpuesto sobre la imagen de fondo con animación -->
+        <div class="relative z-20 pb-32 px-6 reveal-item flex flex-col items-center justify-end h-full">
             <h2 class="font-cursive text-7xl md:text-[11rem] leading-none mb-6 drop-shadow-2xl text-white">¡Te Espero!</h2>
             <p class="text-sm md:text-xl text-white/95 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-medium tracking-wide">
                 Para compartir juntos momentos inolvidables en este nuevo capítulo de mi vida.
             </p>
-            <div class="w-24 h-[1px] bg-white/40 my-8"></div>
+            <div class="w-32 h-[1px] bg-gradient-to-r from-transparent via-slate-300 to-transparent my-8"></div>
             <p class="text-[10px] tracking-[0.5em] text-white/70 font-bold uppercase">Ashlin Merary • 2026</p>
         </div>
     </section>
@@ -297,19 +332,124 @@
     </footer>
 
     <script>
-        // Iniciar experiencia al hacer clic en el botón de bienvenida
+        // --- SISTEMA FÍSICO DE PARTÍCULAS (LLUVIA DE BRILLOS DE PLATA) ---
+        const canvas = document.getElementById('sparkle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let sparkles = [];
+        const maxSparkles = 45; // Cantidad óptima para conservar rendimiento
+
+        // Redimensionamiento dinámico del Canvas
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class SparkleParticle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height; // Comienzan arriba fuera de pantalla
+                this.size = Math.random() * 3 + 1; // Tamaño de los brillos
+                this.speedY = Math.random() * 1.5 + 0.5; // Velocidad de caída
+                this.speedX = Math.random() * 0.4 - 0.2; // Suave balanceo lateral
+                this.opacity = Math.random() * 0.6 + 0.4; // Variación de transparencia
+                this.fadeSpeed = Math.random() * 0.015 + 0.005;
+                this.twinkleFactor = Math.random() * 0.1;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+
+                // Suave efecto de destello de opacidad (twinkling)
+                this.opacity += Math.sin(Date.now() * this.twinkleFactor) * 0.05;
+                if (this.opacity < 0.2) this.opacity = 0.2;
+                if (this.opacity > 1) this.opacity = 1;
+
+                // Si llega al fondo o sale de los lados, reaparece en la parte superior
+                if (this.y > canvas.height || this.x < 0 || this.x > canvas.width) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.beginPath();
+                
+                // Dibujo de estrellas plateadas brillantes de 4 puntas
+                ctx.fillStyle = `rgba(226, 232, 240, ${this.opacity})`;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
+                
+                ctx.moveTo(0, -this.size * 1.5);
+                ctx.lineTo(this.size * 0.3, -this.size * 0.3);
+                ctx.lineTo(this.size * 1.5, 0);
+                ctx.lineTo(this.size * 0.3, this.size * 0.3);
+                ctx.lineTo(0, this.size * 1.5);
+                ctx.lineTo(-this.size * 0.3, this.size * 0.3);
+                ctx.lineTo(-this.size * 1.5, 0);
+                ctx.lineTo(-this.size * 0.3, -this.size * 0.3);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Crear instancia de partículas
+        function initSparkles() {
+            sparkles = [];
+            for (let i = 0; i < maxSparkles; i++) {
+                let particle = new SparkleParticle();
+                // Distribución inicial a lo largo del alto para que no comiencen todos arriba a la vez
+                particle.y = Math.random() * canvas.height; 
+                sparkles.push(particle);
+            }
+        }
+
+        // Bucle de animación física de lluvia
+        function animateSparkles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            sparkles.forEach(sparkle => {
+                sparkle.update();
+                sparkle.draw();
+            });
+            requestAnimationFrame(animateSparkles);
+        }
+
+        // --- APERTURA DE INVITACIÓN Y ANIMACIÓN GSAP ---
         function startExperience() {
+            // Desvanecer el overlay de bienvenida
             const overlay = document.getElementById('welcome-overlay');
             overlay.style.opacity = '0';
             setTimeout(() => overlay.style.display = 'none', 1000);
             
+            // Revelar y animar el botón de control musical
             document.getElementById('music-control').classList.remove('hidden');
             gsap.to('#music-control', { opacity: 1, duration: 1, delay: 1 });
             
-            // Animación lenta e inmersiva de la portada principal
+            // Iniciar ciclo de lluvia física de brillos
+            initSparkles();
+            animateSparkles();
+
+            // Animación de entrada fluida y coreografiada letra por letra para los textos de portada
+            const heroTl = gsap.timeline({ delay: 0.3 });
+            
+            heroTl.to('#hero-subtitle', { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" })
+                  .to('#hero-title', { opacity: 1, scale: 1, duration: 1.8, ease: "pinyon" }, "-=0.8")
+                  .to('#hero-divider', { opacity: 0.6, width: 128, duration: 1.2, ease: "power2.out" }, "-=1.2")
+                  .to('#hero-date', { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, "-=1.0");
+
+            // Animación lenta e inmersiva de la foto de portada principal
             document.getElementById('main-photo').animate([
-                { transform: 'scale(1.1)' },
-                { transform: 'scale(1.0)' }
+                { transform: 'scale(1.0)' },
+                { transform: 'scale(1.05)' }
             ], {
                 duration: 20000,
                 iterations: Infinity,
@@ -317,56 +457,92 @@
                 easing: 'linear'
             });
 
-            // Animación lenta e inmersiva de la foto final de fondo
-            document.getElementById('final-photo').animate([
-                { transform: 'scale(1.0)' },
-                { transform: 'scale(1.1)' }
-            ], {
-                duration: 25000,
-                iterations: Infinity,
-                direction: 'alternate',
-                easing: 'linear'
-            });
-
+            // Activar música de fondo
             toggleMusic(true);
+            
+            // Inicializar las revelaciones de scroll sofisticadas de GSAP
             initScrollAnimations();
         }
 
-        // Animaciones de entrada suaves al hacer scroll
+        // --- SISTEMA DE ANIMACIONES AL HACER SCROLL (GSAP ScrollTrigger) ---
         function initScrollAnimations() {
             gsap.registerPlugin(ScrollTrigger);
-            gsap.utils.toArray('.reveal').forEach((el) => {
-                gsap.to(el, {
+
+            // Revelación suave y desenfoque (Blur In) para cada elemento decorado con "reveal-item"
+            gsap.utils.toArray('.reveal-item').forEach((element) => {
+                gsap.to(element, {
                     opacity: 1,
                     y: 0,
-                    duration: 1.5,
+                    duration: 1.6,
                     ease: "power4.out",
                     scrollTrigger: {
-                        trigger: el,
-                        start: "top 90%",
+                        trigger: element,
+                        start: "top 85%", // Comienza la animación cuando el elemento está al 85% del visor
+                        toggleActions: "play none none none"
                     }
                 });
+            });
+
+            // Animación interactiva de escala de paralaje para la Primera Foto Showcase
+            gsap.to('#photo-showcase-1', {
+                scale: 1.0,
+                scrollTrigger: {
+                    trigger: '#photo-showcase-1',
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true // Sincroniza el crecimiento con la rueda de scroll
+                }
+            });
+
+            // Animación interactiva de escala de paralaje para la Segunda Foto Showcase
+            gsap.to('#photo-showcase-2', {
+                scale: 1.0,
+                scrollTrigger: {
+                    trigger: '#photo-showcase-2',
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+
+            // Animación de paralaje para la Foto Final a Pantalla Completa
+            gsap.to('#final-photo', {
+                scale: 1.0,
+                scrollTrigger: {
+                    trigger: '#final-photo',
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
             });
         }
 
         let isPlaying = false;
-        // Control de reproductor de YouTube integrado para la música
+        const bgMusic = document.getElementById('bg-music');
+
+        // Control nativo de reproducción musical
         function toggleMusic(forcePlay = false) {
-            const player = document.getElementById('yt-player');
             const bars = document.getElementById('music-bars').children;
             
             if (!isPlaying || forcePlay) {
-                player.src += "&autoplay=1";
-                isPlaying = true;
-                for (let bar of bars) bar.style.animation = 'pulse-music 0.6s infinite alternate';
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    for (let bar of bars) {
+                        bar.style.animation = 'pulse-music 0.6s infinite alternate';
+                    }
+                }).catch(err => {
+                    console.log("La reproducción automática requiere interacción con la interfaz física primero:", err);
+                });
             } else {
-                player.src = player.src.split('&')[0];
+                bgMusic.pause();
                 isPlaying = false;
-                for (let bar of bars) bar.style.animation = 'none';
+                for (let bar of bars) {
+                    bar.style.animation = 'none';
+                }
             }
         }
 
-        // Contador de cuenta regresiva en tiempo real
+        // Cuenta regresiva precisa en tiempo real
         const target = new Date("May 24, 2026 12:30:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
